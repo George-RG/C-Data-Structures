@@ -50,6 +50,28 @@ int ht_size(HT ht)
     return ht->used;
 }
 
+void rehash(HT ht)
+{
+    int old_capacity = ht->capacity;
+    HT_Node old_array = ht->array;
+
+    ht->capacity *= 2;
+
+    ht->array = malloc(ht->capacity * sizeof(*ht->array));
+
+    ht->used = 0;
+
+    for (natural_num i = 0; i < ht->capacity; i++)
+        ht->array[i].s = FREE;
+
+    for (natural_num i = 0; i < old_capacity; i++)
+        if (old_array[i].s == USED)
+            ht_insert(ht, old_array[i].data);
+
+
+    free(old_array);
+}
+
 byte ht_insert(HT ht, Pointer value)
 {
     HT_Node possible = NULL;
@@ -79,28 +101,6 @@ byte ht_insert(HT ht, Pointer value)
         rehash(ht);
 
     return 0;
-}
-
-void rehash(HT ht)
-{
-    int old_capacity = ht->capacity;
-    HT_Node old_array = ht->array;
-
-    ht->capacity *= 2;
-
-    ht->array = malloc(ht->capacity * sizeof(*ht->array));
-
-    ht->used = 0;
-
-    for (natural_num i = 0; i < ht->capacity; i++)
-        ht->array[i].s = FREE;
-
-    for (natural_num i = 0; i < old_capacity; i++)
-        if (old_array[i].s == USED)
-            ht_insert(ht, old_array[i].data);
-
-
-    free(old_array);
 }
 
 HT_Node ht_find_node(HT ht, Pointer value)

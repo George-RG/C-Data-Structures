@@ -14,6 +14,14 @@ typedef int(*CompareFunc)(Pointer a,Pointer b);//Returns 0 if a=b,<0 if a<b,>0 i
 
 typedef struct _ht* HT;
 
+HT ht_initialize(CompareFunc, DestroyFunc, HashFunc);
+int ht_size(HT);
+byte ht_insert(HT, Pointer);
+byte ht_remove(HT, Pointer);
+Pointer ht_find(HT, Pointer);
+DestroyFunc hash_set_destroy (HT, DestroyFunc);
+void ht_destroy(HT);
+
 
 /*
 Examples of hash functions:
