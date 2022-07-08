@@ -70,4 +70,5 @@ void ST_destroy(ST st)
 
         current = temp;    
     }
+    free(st);
 }
