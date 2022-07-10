@@ -46,6 +46,12 @@ void ST_Push(ST st, Pointer value)
 
 Pointer ST_Pop(ST st)
 {
+    if(ST_Empty(st))
+    {
+        fprintf(stderr,"Stack is empty\n");
+        return NULL;
+    }
+
     Pointer value = st->head->data;
     link temp = st->head->next;
     free(st->head);
