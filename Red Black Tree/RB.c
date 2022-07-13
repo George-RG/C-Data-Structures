@@ -25,7 +25,7 @@ typedef struct redblack
 void insertFix(RB tree,NodePtr node);
 void deleteFix(RB tree, NodePtr DeppestAffected);
 
-RB Initialize(DestroyFunc Destroy,CompareFunc Compare)
+RB RB_Initialize(DestroyFunc Destroy,CompareFunc Compare)
 {
     RB tree = malloc(sizeof(*tree));
     tree->count=0;
@@ -33,6 +33,8 @@ RB Initialize(DestroyFunc Destroy,CompareFunc Compare)
     tree->root = NullNode;
     tree->Destroy = Destroy;
     tree->Compare = Compare;
+
+    return tree;
 }
 
 void FreeR(NodePtr root, void (*DestroyFunc)(Pointer))
@@ -53,7 +55,7 @@ void FreeR(NodePtr root, void (*DestroyFunc)(Pointer))
     return;
 }
 
-void RBFree(RB tree)
+void RB_Destroy(RB tree)
 {
     FreeR(tree->root,tree->Destroy);
     free(tree);
@@ -135,7 +137,7 @@ void rightRotate(RB tree, NodePtr x)
 }
 
 // Deletion//
-int RemoveKey(RB tree, Pointer key)
+int RB_RemoveKey(RB tree, Pointer key)
 {
     NodePtr node = tree->root;
 
@@ -206,8 +208,7 @@ int RemoveKey(RB tree, Pointer key)
 
     if(tree->Destroy != NULL)
         tree->Destroy(NodeToDelete->data);
-    NodePtr par = NodeToDelete->parent;
-    
+        
     free(NodeToDelete);
 
     if (rn_original_color == 0)
@@ -300,7 +301,7 @@ void deleteFix(RB tree, NodePtr DeppestAffected)
 
 // Inseetion//
 
-int InsertKey(RB tree, Pointer key)
+int RB_InsertKey(RB tree, Pointer key)
 {
     NodePtr node = malloc(sizeof(*node));
     node->parent = NULL;
@@ -443,9 +444,9 @@ NodePtr SearchTreeRec(RB tree,NodePtr node, Pointer key)
     return SearchTreeRec(tree, node->right, key);
 }
 
-NodePtr Search(RB tree, Pointer key)
+NodePtr RB_Search(RB tree, Pointer key)
 {
-    return(tree,tree->root,key);
+    return(SearchTreeRec(tree,tree->root,key));
 }
 
 // Search//
@@ -465,14 +466,14 @@ void InOrderHelper(void(*Visit)(Pointer),NodePtr node)
     InOrderHelper(Visit,node->right);
 }
 
-void PrintElements(RB tree,void(*Visit)(Pointer))
+void RB_PrintElements(RB tree,void(*Visit)(Pointer))
 {
     InOrderHelper(Visit,tree->root);
 }
 
 //InOrder Traversal//
 
-Pointer DataFromNode(NodePtr node)
+Pointer RB_DataFromNode(NodePtr node)
 {
     return(node->data);
 }
@@ -508,7 +509,7 @@ void print2DUtil(NodePtr node, int space)
     print2DUtil(node->left, space);
 }
  
-void print2D(RB tree)
+void RB_print2D(RB tree)
 {
    // Initialize space count as 0
    print2DUtil(tree->root, 0);
