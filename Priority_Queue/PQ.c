@@ -76,18 +76,12 @@ HeapNode Insert_Helper(PQ pq, int height, HeapNode root, HeapNode node)
         root->left = node;
         root->left->parent = root;
 
-        int temp1 = *((int *)root->left->data);
-        int temp2 = *((int *)root->data);
-
         if (pq->compare(root->left->data, root->data) > 0)
         {
             Pointer temp = root->data;
             root->data = root->left->data;
             root->left->data = temp;
         }
-
-        temp1 = *((int *)root->left->data);
-        temp2 = *((int *)root->data);
 
         root->max_height = 1;
 
@@ -148,6 +142,7 @@ HeapNode Insert_Helper(PQ pq, int height, HeapNode root, HeapNode node)
         else
             root->max_height = root->left->max_height + 1;
     }
+    return root;
 }
 
 void Fix_Layer(PQ pq)
@@ -343,22 +338,22 @@ void PQ_Destroy(PQ pq)
     free(pq);
 }
 
-// void ShowHeap(HeapNode node, int space)
-// {
-//     if (node == NULL)
-//         return; // Base case
+void ShowHeap(HeapNode node, int space)
+{
+    if (node == NULL)
+        return; // Base case
 
-//     // Increase distance between levels
-//     space += 8;
+    // Increase distance between levels
+    space += 8;
 
-//     ShowHeap(node->right, space);
+    ShowHeap(node->right, space);
 
-//     printf("\n");
-//     for (int i = 8; i < space; i++)
-//         printf(" ");
+    printf("\n");
+    for (int i = 8; i < space; i++)
+        printf(" ");
 
-//     printf("%d(min:%d)(max:%d)\n", *((int *)node->data), node->min_height, node->max_height);
+    printf("%d(min:%d)(max:%d)\n", *((int *)node->data), node->min_height, node->max_height);
 
-//     // Process left child
-//     ShowHeap(node->left, space);
-// }
+    // Process left child
+    ShowHeap(node->left, space);
+}
