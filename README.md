@@ -6,6 +6,7 @@ Useful ready data structures written in **C**
 - Queue
 - Hash Table
 - Linear Hash Table
+- Priority Queue
 
 **All modules were coded with flexibility in mind.**
 >That's why they all store 'Pointer', a typedef for 'void*'.
