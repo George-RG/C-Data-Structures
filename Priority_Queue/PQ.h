@@ -9,4 +9,5 @@ PQ PQ_Initialize(CompareFunc compare, DestroyFunc destroy);//Initialize the prio
 int PQ_IsEmpty (PQ);//Returns 1 if the queue is empty, 0 otherwise
 int PQ_Size(PQ);//Returns the size of the queue
 void PQ_Insert(PQ pq, Pointer data);//Inserts a new node into the queue
-void PQ_Pop(PQ pq);//Removes the highest priority node from the queue
+Pointer PQ_Pop(PQ pq);//Removes the highest priority node from the queue
+void PQ_Destroy(PQ pq);//Frees all the memory allocated for the queue
