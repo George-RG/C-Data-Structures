@@ -451,7 +451,7 @@ NodePtr SearchTreeRec(RB tree,NodePtr node, Pointer key)
         return node;
     }
 
-    if (key < node->data)
+    if (tree->Compare(key, node->data) < 0)
     {
         return SearchTreeRec(tree, node->left, key);
     }
