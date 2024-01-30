@@ -145,7 +145,7 @@ void rightRotate(RB tree, NodePtr x)
 int RB_RemoveKey(RB tree, Pointer key)
 {
     if(key == NULL)
-        return -1;
+        return RB_ERROR;
 
     NodePtr node = tree->root;
 
@@ -173,7 +173,7 @@ int RB_RemoveKey(RB tree, Pointer key)
 
     if (NodeToDelete == NullNode) // Case the key is not found
     {
-        return -1;
+        return RB_ERROR;
     }
 
     ReplaceNode = NodeToDelete;
@@ -224,7 +224,7 @@ int RB_RemoveKey(RB tree, Pointer key)
         deleteFix(tree, DeppestAffected);
     }
     tree->count--;
-    return 0;
+    return RB_OK;
 }
 
 // For balancing the tree after deletion
@@ -312,7 +312,7 @@ void deleteFix(RB tree, NodePtr DeppestAffected)
 int RB_InsertKey(RB tree, Pointer key)
 {
     if(key == NULL)
-        return -1;
+        return RB_ERROR;
 
     NodePtr node = malloc(sizeof(*node));
     node->parent = NULL;
@@ -330,7 +330,7 @@ int RB_InsertKey(RB tree, Pointer key)
         if(tree->Compare(node->data, x->data)==0)
         {
             free(node);
-            return -1;
+            return RB_DUP;
         }
 
 
@@ -362,18 +362,18 @@ int RB_InsertKey(RB tree, Pointer key)
     {
         node->color = 0;
         tree->count++;
-        return 0;
+        return RB_OK;
     }
 
     if (node->parent->parent == NULL)
     {
         tree->count++;
-        return 0;
+        return RB_OK;
     }
 
     insertFix(tree,node);
     tree->count++;
-    return 0;
+    return RB_OK;
 }
 
 // For balancing the tree after insertion
