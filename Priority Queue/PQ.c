@@ -273,6 +273,7 @@ Pointer PQ_Pop(PQ pq)
 
     if(last_parent == NULL)
     {
+        free(pq->root);
         pq->root = NULL;
         pq->size--;
         Fix_Layer(pq);
